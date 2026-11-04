@@ -1,0 +1,44 @@
+[intro]
+text = "Welcome. This is where I introduce the game. You can type quit at any time to quit the game."
+
+[intro.choices.1]
+text = "Play"
+target = "studio"
+
+[intro.choices.2]
+text = "Quit"
+target = "quit"
+
+
+[studio]
+text = "You are sitting at your desk. Your favorite art supplies and a cup of cold coffee are in front of you."
+
+[studio.status]
+type = "game_stats"
+
+[studio.choices.1]
+text = "Drink the cold coffee."
+target = "studio"
+action = "drink_coffee"
+
+[studio.choices.2]
+text = "Go to the gallery."
+target = "gallery"
+
+# ----------------------------------------------------
+
+[gallery]
+text = "Your work is a success! You win!"
+
+[gallery.status]
+type = "game_stats"
+
+[gallery.choices]
+# Empty
+
+
+[quit]
+text = "Sorry to see you go. Goodbye!"
+
+[quit.choices]
+# Empty

@@ -1,0 +1,17 @@
+[project]
+name = "untitled"
+version = "0.1.0"
+description = "becoming a master artist, a text-based adventure"
+readme = "README.md"
+authors = [
+    { name = "owlpuppy", email = "322356110+owlpuppy@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = []
+
+[project.scripts]
+untitled = "untitled:main"
+
+[build-system]
+requires = ["uv_build>=0.12.10,<0.13.0"]
+build-backend = "uv_build"

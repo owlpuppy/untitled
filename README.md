@@ -1,0 +1,46 @@
+# untitled
+> becoming a master artist, a text-based adventure
+
+Becoming an artist is hard, becoming a master artist is even harder. I tried to make it difficult. Please have patience.
+There is no save game currently planned.
+Warning: this is incomplete and not fully tested!
+
+## Purpose  
+text-based adventure game, entertainment
+
+## Requirements:  
+Python 3.13 or later, UV, and a terminal able to output ANSI escape characters (this can be altered if necessary).
+(also refer to pyproject.toml)
+
+## Use
+
+### Play the game
+Navigate to the base directory (the one with this Readme in it).
+Make shell script executable.
+Enter the following into the terminal (note this will clear the terminal window):
+```./play.sh```
+
+### Run automated tests
+Navigate to the base directory (the one with this Readme in it).
+Make shell script executable.
+Enter the following into the terminal:
+```./test.sh```
+Note there aren't any tests yet, but it will run.
+
+## Planned  
+- complete basic classes
+- add more information to title section (it's bare)
+- expand status display (location, max energy, etc)
+- add rooms and actions (create art, etc.), separate actions
+- add failure modes
+- automated tests
+- modify functions to return tuples as necessary, ensure all print commands are located in the same function
+
+## Possible
+- editable artwork inventory
+- settings menu
+- logging (haven't thought of anything to log yet)
+- print handler (type to screen)
+- randomized descriptions and statements
+
+Last updated: 3 November 2026

@@ -5,6 +5,8 @@ Becoming an artist is hard, becoming a master artist is even harder. I tried to 
 There is no save game currently planned.
 Warning: this is incomplete and not fully tested!
 
+To be clear, untitled is the *name* I chose. It's intentional. And maybe dumb, but oh well.
+
 ## Purpose  
 text-based adventure game, entertainment
 
@@ -28,13 +30,14 @@ Enter the following into the terminal:
 Note there aren't any tests yet, but it will run.
 
 ## Planned  
-- complete basic classes
+- expand classes
 - add more information to title section (it's bare)
 - expand status display (location, max energy, etc)
 - add rooms and actions (create art, etc.), separate actions
 - add failure modes
 - automated tests
-- modify functions to return tuples as necessary, ensure all print commands are located in the same function
+- modify functions to return stuff as necessary, ensure all print commands are located in the same function
+- filter player input more
 
 ## Possible
 - editable artwork inventory
@@ -43,4 +46,9 @@ Note there aren't any tests yet, but it will run.
 - print handler (type to screen)
 - randomized descriptions and statements
 
-Last updated: 3 November 2026
+## Completed changes
+- basic classes
+- actions separated
+- screen output separated
+
+Last updated: 4 November 2026

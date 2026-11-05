@@ -18,7 +18,6 @@ type = "game_stats"
 
 [studio.choices.1]
 text = "Drink the cold coffee."
-target = "studio"
 action = "drink_coffee"
 
 [studio.choices.2]
@@ -41,4 +40,15 @@ type = "game_stats"
 text = "Sorry to see you go. Goodbye!"
 
 [quit.choices]
+# Empty
+
+
+[lose]
+text = """You were found frantically trying to eat the bristles off all your paintbrushes.
+You and your therapist decide together it's best to choose a new career."""
+
+[lose.status]
+text = "Sorry, you lost. "
+
+[lose.choices]
 # Empty

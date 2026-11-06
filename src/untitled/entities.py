@@ -1,7 +1,7 @@
 # untitled entities
 
+import shutil, random
 from enum import Enum
-import random
 
 class ArtType(Enum):
     PAINTING = 'painting'
@@ -26,19 +26,21 @@ class Player:
     start_loc = "intro"
     quit_loc = "quit"
     lose_loc = "lose"
+    setup_loc = "setup"
 
     # instance vars
-    def __init__(self, terminal_width: int) -> None:
+    def __init__(self) -> None:
         self.works: list[Artwork] = []
-        self.energy_level: int = random.randint(10, 35)
+        self.energy: int = random.randint(10, 35)
         self.crit_energy: int = random.randint(56, 70)
         self.win_value: int = random.randint(100, 500)
         self.location: str = self.start_loc
         self.prev_location: str | None = None
-        self.quit_location: str = self.quit_loc
         self.delay: int = 5
-        self.terminal_width: int = terminal_width
+        self.terminal_width: int = shutil.get_terminal_size().columns
         self.status_reason = None
+
+    # mechanic instance methods
 
     def won_by_value(self) -> bool:
         if self.works:
@@ -47,16 +49,36 @@ class Player:
                 return True
         return False
 
+    # move instance methods
+
     def move(self, new_location) -> None:
         self.prev_location = self.location
         self.location = new_location
 
+    def back(self) -> None:
+        self.prev_location, self.location = self.location, self.prev_location
+
     def quit(self) -> None:
         self.move(self.quit_loc)
+
+    def setup(self) -> None:
+        self.move(self.setup_loc)
 
     def lose(self, reason) -> None:
         self.status_reason = reason
         self.move(self.lose_loc)
 
+    # action instance methods
+
     def drink_coffee(self) -> None:
-        self.energy_level += random.randint(5, 20)
+        self.energy += random.randint(5, 20)
+
+    # setup instance methods
+
+    def set_delay(self) -> None:
+        self.delay += 2
+        if self.delay > 7:
+            self.delay = 1
+
+    def set_width(self) -> int:
+        self.terminal_width = shutil.get_terminal_size().columns

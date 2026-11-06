@@ -32,7 +32,6 @@ Note there aren't any tests yet, but it will run.
 ## Planned  
 - expand classes
 - add more information to title section (it's bare)
-- expand status display (location, max energy, etc)
 - add rooms and actions (create art, etc.), separate actions
 - add failure modes
 - automated tests
@@ -41,7 +40,6 @@ Note there aren't any tests yet, but it will run.
 
 ## Possible
 - editable artwork inventory
-- settings menu
 - logging (haven't thought of anything to log yet)
 - print handler (type to screen)
 - randomized descriptions and statements
@@ -50,5 +48,10 @@ Note there aren't any tests yet, but it will run.
 - basic classes
 - actions separated
 - screen output separated
+- separate status displays, can accept messages as well
+- settings menu
+- added ability to go to previous location by using << prev >> in story
+- added commands function to control the common commands display
+- added more instance methods 
 
 Last updated: 4 November 2026

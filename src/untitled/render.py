@@ -11,7 +11,9 @@ def game_status(player: Player, node: dict) -> str:
         if status_type is not None:
             match status_type:
                 case 'game_stats':
-                    status_response += f'[Energy: {player.energy_level}/{player.max_energy}] [{player.location}]'
+                    status_response += f'[Energy: {player.energy}/{player.max_energy}] [{player.location}]'
+                case 'setup_stats':
+                    status_response += f'[delay: {player.delay} sec] [terminal width: {player.terminal_width}] '
                 case _:
                     raise ValueError(f"status type in {player.location} is not valid")
 
@@ -22,6 +24,19 @@ def game_status(player: Player, node: dict) -> str:
             status_response += player.status_reason
 
     return status_response
+
+def game_commands(node: dict) -> str:
+    command_type = 'show'
+    command_response = 'type to quit, setup'
+    if 'commands' in node:
+        command_type = node['commands'].get('type')
+        match command_type:
+            case 'hide':
+                command_response = ''
+            case _:
+                raise ValueError(f'{command_type} not recognized')
+
+    return command_response
 
 def refresh_story(player: Player, node: dict) -> tuple[str, bool]:
     head_separator = "="
@@ -35,6 +50,7 @@ untitled
 {node['text']}
 
 {div_separator * player.terminal_width}
+{game_commands(node)}
 """
 
     if "choices" not in node or not node["choices"]:

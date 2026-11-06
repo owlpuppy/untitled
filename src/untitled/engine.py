@@ -1,6 +1,6 @@
 # untitled engine
 
-import sys, os, errno, tomllib, shutil, time
+import sys, os, errno, tomllib, time
 from pathlib import Path
 from .entities import ArtType, Artwork, Player
 from .actions import game_action
@@ -25,7 +25,8 @@ def load_toml(file: str = '') -> dict:
 
 def start_game() -> None:
     story = load_toml("story")
-    player = Player(shutil.get_terminal_size().columns)
+    player = Player()
+    commands = ['quit', 'setup']
 
     while True:
         node = story[player.location]
@@ -43,17 +44,26 @@ def start_game() -> None:
         if entered in node["choices"]:
             chosen = node["choices"][entered]
             target = chosen.get("target")
-            # .get() prevents crashing if 'action' is missing in TOML
             reply = game_action(player, chosen.get("action"))
             if target is not None:
-                player.move(target)
-
-        elif entered == "quit":
-            player.quit()
-
+                if target in story:
+                    player.move(target)
+                elif target == '<< prev >>':
+                    player.back()
+                else:
+                    raise ValueError(f"{target} not present in TOML file")
         else:
-            reply = "\n>> try again <<"
+            match entered:
+                case 'quit':
+                    player.quit()
+                case 'setup':
+                    if player.location != player.setup_loc:
+                        player.setup()
+                    else:
+                        reply = ">> already in setup <<"
+                case _:
+                  reply = ">> try again <<"
 
         if reply is not None:
-            print(reply)
+            print(f"\n{reply}")
             time.sleep(player.delay)

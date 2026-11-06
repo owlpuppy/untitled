@@ -1,3 +1,5 @@
+# ---------------------------------------------------- intro
+
 [intro]
 text = "Welcome. This is where I introduce the game. You can type quit at any time to quit the game."
 
@@ -5,10 +7,7 @@ text = "Welcome. This is where I introduce the game. You can type quit at any ti
 text = "Play"
 target = "studio"
 
-[intro.choices.2]
-text = "Quit"
-target = "quit"
-
+# ---------------------------------------------------- studio
 
 [studio]
 text = "You are sitting at your desk. Your favorite art supplies and a cup of cold coffee are in front of you."
@@ -24,7 +23,7 @@ action = "drink_coffee"
 text = "Go to the gallery."
 target = "gallery"
 
-# ----------------------------------------------------
+# ---------------------------------------------------- gallery
 
 [gallery]
 text = "Your work is a success! You win!"
@@ -32,16 +31,24 @@ text = "Your work is a success! You win!"
 [gallery.status]
 type = "game_stats"
 
+[gallery.commands]
+type = "hide"
+
 [gallery.choices]
 # Empty
 
+# ---------------------------------------------------- quit
 
 [quit]
 text = "Sorry to see you go. Goodbye!"
 
+[quit.commands]
+type = "hide"
+
 [quit.choices]
 # Empty
 
+# ---------------------------------------------------- lose
 
 [lose]
 text = """You were found frantically trying to eat the bristles off all your paintbrushes.
@@ -50,5 +57,30 @@ You and your therapist decide together it's best to choose a new career."""
 [lose.status]
 text = "Sorry, you lost. "
 
+[lose.commands]
+type = "hide"
+
 [lose.choices]
 # Empty
+
+# ---------------------------------------------------- setup
+
+[setup]
+text = """If you would like to resize the screen to match a new terminal width, choose Set New Screen Size.
+If you want to change the delay time of the response messages at the bottom of the screen, choose Change Delay.
+Current settings are shown in the status bar under the title."""
+
+[setup.status]
+type = "setup_stats"
+
+[setup.choices.1]
+text = "Return to game"
+target = "<< prev >>"
+
+[setup.choices.2]
+text = "Set New Screen Size"
+action = "set_width"
+
+[setup.choices.3]
+text = "Change Delay"
+action = "set_delay"

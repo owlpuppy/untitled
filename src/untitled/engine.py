@@ -44,7 +44,7 @@ def start_game() -> None:
         if entered in node["choices"]:
             chosen = node["choices"][entered]
             target = chosen.get("target")
-            reply = game_action(player, chosen.get("action"))
+            reply = game_action(player, chosen.get("action"), chosen.get("responses"))
             if target is not None:
                 if target in story:
                     player.move(target)

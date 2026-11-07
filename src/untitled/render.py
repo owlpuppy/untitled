@@ -53,7 +53,7 @@ untitled
 {game_commands(node)}
 """
 
-    if "choices" not in node or not node["choices"]:
+    if not node.get("choices"):
         story_to_screen += "\n*** THE END ***\n"
         return (story_to_screen, False)
 

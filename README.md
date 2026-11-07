@@ -32,7 +32,7 @@ Note there aren't any tests yet, but it will run.
 ## Planned  
 - expand classes
 - add more information to title section (it's bare)
-- add rooms and actions (create art, etc.), separate actions
+- add rooms and actions (create art, etc.)
 - add failure modes
 - automated tests
 - modify functions to return stuff as necessary, ensure all print commands are located in the same function
@@ -44,7 +44,8 @@ Note there aren't any tests yet, but it will run.
 - print handler (type to screen)
 - randomized descriptions and statements
 
-## Completed changes
+## Changelog (forgot this is how you do that)
+## 0.1.0 - 0.1.2
 - basic classes
 - actions separated
 - screen output separated
@@ -54,4 +55,11 @@ Note there aren't any tests yet, but it will run.
 - added commands function to control the common commands display
 - added more instance methods 
 
-Last updated: 4 November 2026
+### 0.1.3
+- moved action responses to TOML file
+- added ability to randomly choose one of multiple action responses
+- added ability to define lose message and status in TOML file and collect responses
+- changed end of game detection to use get (simpler, am told it's faster)
+- added content to TOML
+
+Last updated: 6 November 2026

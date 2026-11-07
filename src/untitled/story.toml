@@ -23,6 +23,11 @@ action = "drink_coffee"
 text = "Go to the gallery."
 target = "gallery"
 
+[studio.choices.1.responses]
+1 = ["Gulp. Ugh, bitter!", "It may be cold, and bitter, but at least it's strong!", "Sip. Hmm. Needs something. Like good coffee."]
+2 = ["Your hands begin to shake, be careful!", "OhWowThisDoesn'tTasteSoSoBad!", "Ahhh lots of energy! And lots. And lots. Whoa."]
+lose = ["Not good, the room spins, panic sets in...", "You drank too much coffee."]
+
 # ---------------------------------------------------- gallery
 
 [gallery]

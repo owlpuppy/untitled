@@ -1,6 +1,6 @@
 # untitled engine
 
-import sys, os, errno, tomllib, time
+import sys, os, errno, tomllib, time, re
 from pathlib import Path
 from .entities import ArtType, Artwork, Player
 from .actions import game_action
@@ -29,6 +29,7 @@ def start_game() -> None:
     commands = ['quit', 'setup']
 
     while True:
+        player.update_mood()
         node = story[player.location]
         display_story, keep_playing = refresh_story(player, node)
 
@@ -37,7 +38,7 @@ def start_game() -> None:
         if keep_playing == False:
             break
 
-        entered = input("\nChoose an option: ").strip().lower()
+        entered = re.sub(r'[^A-Za-z0-9 ]+', '', input("\nChoose an option: ").strip().lower())
 
         reply = None
 

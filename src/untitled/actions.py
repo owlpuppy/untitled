@@ -10,7 +10,8 @@ class GameAction(str, Enum):
     SET_DELAY = 'set_delay'
 
 def game_action(player: Player, action: str | None, responses: dict | None) -> str | None:
-    response = None
+    if action == None:
+        return None
 
     match action:
         case GameAction.DRINK_COFFEE.value:
@@ -20,12 +21,13 @@ def game_action(player: Player, action: str | None, responses: dict | None) -> s
             player.drink_coffee()
 
             if player.energy < player.max_energy:
-                response = random.choice(responses["1"])
+                return random.choice(responses["1"])
             elif player.energy < player.crit_energy:
-                response = random.choice(responses["2"])
+                return random.choice(responses["2"])
             else:
                 response, status = responses["lose"]
                 player.lose(status)
+                return response
 
         case GameAction.SET_WIDTH.value:
             player.set_width()
@@ -33,10 +35,5 @@ def game_action(player: Player, action: str | None, responses: dict | None) -> s
         case GameAction.SET_DELAY.value:
             player.set_delay()
 
-        case None:
-            pass
-
         case _:
             raise ValueError(f"{action} is not defined")
-
-    return response

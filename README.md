@@ -36,13 +36,15 @@ Note there aren't any tests yet, but it will run.
 - add failure modes
 - automated tests
 - modify functions to return stuff as necessary, ensure all print commands are located in the same function
-- filter player input more
+- decide on what I want for win mechanics and how to implement them
+- artwork title generator
 
 ## Possible
 - editable artwork inventory
 - logging (haven't thought of anything to log yet)
 - print handler (type to screen)
 - randomized descriptions and statements
+- more input filtering
 
 ## Changelog (forgot this is how you do that)
 ## 0.1.0 - 0.1.2
@@ -62,4 +64,11 @@ Note there aren't any tests yet, but it will run.
 - changed end of game detection to use get (simpler, am told it's faster)
 - added content to TOML
 
-Last updated: 6 November 2026
+### 0.1.4
+- updated drink coffee action logic
+- added PlayerMood enum
+- added player instance method to update mood based on artworks (based on combined mood of artworks)
+- added liked (mood) to artwork and a class method to create artwork with weighted randomized mood (based on player mood)
+- added basic input filtering
+
+Last updated: 7 November 2026

@@ -11,7 +11,7 @@ def game_status(player: Player, node: dict) -> str:
         if status_type is not None:
             match status_type:
                 case 'game_stats':
-                    status_response += f'[Energy: {player.energy}/{player.max_energy}] [{player.location}]'
+                    status_response += f'[Energy: {player.energy}/{player.max_energy}] [Mood: {player.mood.value[0]}]   [{player.location}]'
                 case 'setup_stats':
                     status_response += f'[delay: {player.delay} sec] [terminal width: {player.terminal_width}] '
                 case _:

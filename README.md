@@ -32,18 +32,19 @@ Note there aren't any tests yet, but it will run.
 ## Planned  
 - expand classes
 - add more information to title section (it's bare)
-- add rooms and actions (create art, etc.)
+- add rooms and actions
 - add failure modes
 - automated tests
 - modify functions to return stuff as necessary, ensure all print commands are located in the same function
 - decide on what I want for win mechanics and how to implement them
 - artwork title generator
+- update quit and intro screens
+- update studio text
 
 ## Possible
 - editable artwork inventory
 - logging (haven't thought of anything to log yet)
 - print handler (type to screen)
-- randomized descriptions and statements
 - more input filtering
 
 ## Changelog (forgot this is how you do that)
@@ -71,4 +72,13 @@ Note there aren't any tests yet, but it will run.
 - added liked (mood) to artwork and a class method to create artwork with weighted randomized mood (based on player mood)
 - added basic input filtering
 
-Last updated: 7 November 2026
+### 0.1.5
+- started on studio time mechanic
+- started on nap action
+- started on add artwork action
+- updated drink coffee action to use time
+- modified update mood mechanic to vary based on time in studio
+- modified status bar for clarity, added studio time to status bar
+(I wanted to commit this even though it is not done)
+
+Last updated: 8 November 2026

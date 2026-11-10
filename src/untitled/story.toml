@@ -20,13 +20,26 @@ text = "Drink the cold coffee."
 action = "drink_coffee"
 
 [studio.choices.2]
-text = "Go to the gallery."
-target = "gallery"
+text = "Create something!"
+action = "create"
+
+#[studio.choices.2]
+#text = "Go to the gallery."
+#target = "gallery"
 
 [studio.choices.1.responses]
 1 = ["Gulp. Ugh, bitter!", "It may be cold, and bitter, but at least it's strong!", "Sip. Hmm. Needs something. Like good coffee."]
 2 = ["Your hands begin to shake, be careful!", "OhWowThisDoesn'tTasteSoSoBad!", "Ahhh lots of energy! And lots. And lots. Whoa."]
 lose = ["Not good, the room spins, panic sets in...", "You drank too much coffee."]
+
+[studio.choices.2.responses]
+1 = ['After much angst and deep thought, you created << artwork title >>. Amazing.',
+'You translated your internal "<< player mood >>" into something new!',
+"You've meticulously crafted your next masterpiece! Well hopefully anyway."]
+2 = ["Ugh! Despite how hard you try, nothing comes to mind.",
+"Bummer, you started on a few different things but they just didn't work out.",
+"Awww, crap. That didn't work at all. Grrr..."]
+lose = ["Uh oh, something doesn't feel right. You might need to... (thump) Too late.", "You became exhausted and fainted."]
 
 # ---------------------------------------------------- gallery
 

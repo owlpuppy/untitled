@@ -37,9 +37,11 @@ Note there aren't any tests yet, but it will run.
 - automated tests
 - modify functions to return stuff as necessary, ensure all print commands are located in the same function
 - decide on what I want for win mechanics and how to implement them
-- artwork title generator
 - update quit and intro screens
 - update studio text
+- add warning and lose mechanic for no sleep (called in engine) (may need to place creation of reply variable at start of loop and append to it)
+- need to add testing (should have done this already)
+- create a way to update inventory (may just be able to use a second input)
 
 ## Possible
 - editable artwork inventory
@@ -81,4 +83,11 @@ Note there aren't any tests yet, but it will run.
 - modified status bar for clarity, added studio time to status bar
 (I wanted to commit this even though it is not done)
 
-Last updated: 8 November 2026
+### 0.1.6
+- create artwork action finished
+- create artwork status and reply messages added 
+- fixed mood mechanic to only adjust when a work has been added
+- created artwork title generator
+- temporarily displayed all artworks (this will be removed)
+
+Last updated: 9 November 2026

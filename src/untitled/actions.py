@@ -11,6 +11,10 @@ class GameAction(str, Enum):
     SET_WIDTH = 'set_width'
     SET_DELAY = 'set_delay'
 
+# helper functions
+
+# main functions
+
 def game_action(player: Player, action: str | None, responses: dict | None) -> str | None:
     if action == None:
         return None
@@ -36,10 +40,19 @@ def game_action(player: Player, action: str | None, responses: dict | None) -> s
             player.add_studio_time(30, 60)
 
             if player.energy < 0:
-                pass #lose mechanic with messages
-            else:
-                # created work message
-                player.create()
+                response, status = responses["lose"]
+                player.lose(status)
+                return response
+
+            if random.random() < player.mood.value[2]:
+                response = random.choice(responses["2"])
+
+            player.create()
+            response = random.choice(responses["1"])
+            response = response.replace("<< artwork title >>", player.works[-1].title)
+            response = response.replace("<< player mood >>", player.mood.value[0])
+            return response
+
 
         case GameAction.NAP.value:
             player.nap()

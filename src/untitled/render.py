@@ -15,7 +15,8 @@ def game_status(player: Player, node: dict) -> str:
                     mood = f'[Mood: {player.mood.value[0]}]'
                     studio_hours, studio_minutes = divmod(player.studio_time, 60) if player.studio_time > 0 else (0, 0)
                     studio_time = f'[Studio time: {studio_hours}h:{studio_minutes}m]'
-                    status_response += f'{energy} {studio_time} {mood}   [{player.location}]'
+                    tired = 'very tired!!' if player.is_very_tired() else 'tired!!' if player.is_tired() else ''
+                    status_response += f'{energy} {studio_time} {mood}   [{player.location}] {tired}'
                 case 'setup_stats':
                     status_response += f'[delay: {player.delay} sec] [terminal width: {player.terminal_width}] '
                 case _:

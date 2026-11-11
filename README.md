@@ -90,4 +90,9 @@ Note there aren't any tests yet, but it will run.
 - created artwork title generator
 - temporarily displayed all artworks (this will be removed)
 
+### 0.1.7
+- reworked mood mechanic to work differently
+- added loss by excessive studio time mechanic, warns in status line only
+- (artwork display is still temporarily on)
+
 Last updated: 9 November 2026

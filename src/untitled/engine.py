@@ -30,6 +30,9 @@ def start_game() -> None:
 
     while True:
         player.update_mood()
+        if player.is_overworked():
+            player.lose("You were working in your studio too long.")
+
         node = story[player.location]
         display_story, keep_playing = refresh_story(player, node)
 

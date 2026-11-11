@@ -70,7 +70,6 @@ class Player:
     # instance vars
     def __init__(self) -> None:
         self.works: list[Artwork] = []
-        self.work_added = False
         self.energy: int = random.randint(10, 35)
         self.mood: PlayerMood = PlayerMood.OKI
         self.studio_time = 0
@@ -127,19 +126,30 @@ class Player:
             weighted_max = min + 1
         self.studio_time += random.randint(min, weighted_max)
 
-    def update_mood(self) -> None:
-        if self.works and self.work_added:
-            self.work_added = False
-            liked_overall = sum((work.liked.value[1] * work.value) for work in self.works)
-            if liked_overall > 0:
-                self.change_mood("+")
-            elif liked_overall < 0:
-                self.change_mood("-")
+    def is_tired(self) -> bool:
+        if self.studio_time > (480 + self.energy):
+            return True
+        return False
 
-        if self.studio_time > (720 + self.energy):
+    def is_very_tired(self) -> bool:
+        if self.studio_time > (960 + self.energy):
+            return True
+        return False
+
+    def is_overworked(self) -> bool:
+        if self.studio_time > (1440 + self.energy):
+            return True
+        return False
+
+    def update_mood(self) -> None:
+        if self.works:
+            liked_overall = sum((work.liked.value[1] * work.value) for work in self.works) / sum((work.value) for work in self.works)
+            self.mood = min(PlayerMood, key=lambda mood: abs(mood.value[1] - liked_overall))
+
+        if self.is_tired():
             self.change_mood("-")
 
-        if self.studio_time > (1440 + self.energy):
+        if self.is_very_tired():
             self.change_mood("-")
 
     # move instance methods
@@ -184,7 +194,6 @@ class Player:
             mood_list = self.mood_list[1:-1]
 
         self.works.append(Artwork.create(random.choice(mood_list)))
-        self.work_added = True
 
     # setup instance methods
 

@@ -95,4 +95,11 @@ Note there aren't any tests yet, but it will run.
 - added loss by excessive studio time mechanic, warns in status line only
 - (artwork display is still temporarily on)
 
+### 0.1.8
+- added ability for variable story text and helper function to select text based on type
+- fixed error that bypasssed failure to create
+- added home with nap (bed) action, finished nap (bed) action
+- added more story text
+- changed actions to use error for in game failure (idk if this is best but it makes it readable)
+
 Last updated: 9 November 2026

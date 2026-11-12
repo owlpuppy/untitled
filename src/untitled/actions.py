@@ -13,6 +13,10 @@ class GameAction(str, Enum):
 
 # helper functions
 
+def check_responses(responses: dict | None) -> None:
+    if responses is None:
+        raise ValueError(f"No responses found for {action}")
+
 # main functions
 
 def game_action(player: Player, action: str | None, responses: dict | None) -> str | None:
@@ -21,9 +25,7 @@ def game_action(player: Player, action: str | None, responses: dict | None) -> s
 
     match action:
         case GameAction.DRINK_COFFEE.value:
-            if responses is None:
-                raise ValueError(f"No responses found for {action}")
-
+            check_responses(responses)
             player.drink_coffee()
 
             if player.energy < player.max_energy:
@@ -36,6 +38,7 @@ def game_action(player: Player, action: str | None, responses: dict | None) -> s
                 return response
 
         case GameAction.CREATE.value:
+            check_responses(responses)
             player.use_energy(5, 20)
             player.add_studio_time(30, 60)
 
@@ -45,7 +48,7 @@ def game_action(player: Player, action: str | None, responses: dict | None) -> s
                 return response
 
             if random.random() < player.mood.value[2]:
-                response = random.choice(responses["2"])
+                return random.choice(responses["error"])
 
             player.create()
             response = random.choice(responses["1"])
@@ -55,8 +58,18 @@ def game_action(player: Player, action: str | None, responses: dict | None) -> s
 
 
         case GameAction.NAP.value:
+            check_responses(responses)
+            if not player.is_tired():
+                return random.choice(responses["error"])
             player.nap()
-            # nap message
+            if player.energy < player.max_energy:
+                return random.choice(responses["1"])
+            elif player.energy < player.crit_energy:
+                return random.choice(responses["2"])
+            else:
+                response, status = responses["lose"]
+                player.lose(status)
+                return response
 
         case GameAction.SET_WIDTH.value:
             player.set_width()

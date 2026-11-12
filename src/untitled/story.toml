@@ -10,7 +10,16 @@ target = "studio"
 # ---------------------------------------------------- studio
 
 [studio]
-text = "You are sitting at your desk. Your favorite art supplies and a cup of cold coffee are in front of you."
+text = ["""You are sitting at your desk. Your favorite art supplies and a cup of cold coffee are in front of you.
+Sunlight streams in the big windows, you can feel the warmth. What a perfect day to make some art!
+Or... drink some of that coffee. Did you make that yesterday, or this morning?""",
+"""It's getting a little chilly. You didn't realize how much the sunlight warmed your studio.
+There's probably still time to get a little more work in before it's time to go.""",
+"""It's late, you're pretty tired. Still determined to do more though.
+Something tells you it's probably time to rest, but you just don't want to stop."""]
+
+[studio.story]
+type = "studio_time"
 
 [studio.status]
 type = "game_stats"
@@ -22,6 +31,10 @@ action = "drink_coffee"
 [studio.choices.2]
 text = "Create something!"
 action = "create"
+
+[studio.choices.3]
+text = "Go home."
+target = "home"
 
 #[studio.choices.2]
 #text = "Go to the gallery."
@@ -36,10 +49,35 @@ lose = ["Not good, the room spins, panic sets in...", "You drank too much coffee
 1 = ['After much angst and deep thought, you created << artwork title >>. Amazing.',
 'You translated your internal "<< player mood >>" into something new!',
 "You've meticulously crafted your next masterpiece! Well hopefully anyway."]
-2 = ["Ugh! Despite how hard you try, nothing comes to mind.",
+error = ["Ugh! Despite how hard you try, nothing comes to mind.",
 "Bummer, you started on a few different things but they just didn't work out.",
 "Awww, crap. That didn't work at all. Grrr..."]
 lose = ["Uh oh, something doesn't feel right. You might need to... (thump) Too late.", "You became exhausted and fainted."]
+
+# ---------------------------------------------------- home
+
+[home]
+text = """You walk in, lock the door, and toss you keys on the table.
+Your comfy bed looks very inviting."""
+
+[home.status]
+type = "game_stats"
+
+[home.choices.1]
+text = "Go to sleep"
+action = "nap"
+
+[home.choices.2]
+text = "Go to your studio."
+target = "studio"
+
+[home.choices.1.responses]
+1 = ["Flop... Ahhh!", "Zzzzzzz..."]
+2 = ["Zzzz... blink... Oh no, look at how late it is!", "Oh wow that was a great... yikes the time!"]
+error = ["Eh, not tired enought to sleep yet.", "No sleep for you!!! Not yet anyway"]
+lose = ["The day passes as you are still in bed. Unfortunately you missed an important deadline.", "You slept too long."]
+
+
 
 # ---------------------------------------------------- gallery
 

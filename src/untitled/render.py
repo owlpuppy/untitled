@@ -2,6 +2,8 @@
 
 from .entities import ArtType, Artwork, Player
 
+# helper functions
+
 def game_status(player: Player, node: dict) -> str:
     status_response = ''
 
@@ -30,6 +32,28 @@ def game_status(player: Player, node: dict) -> str:
 
     return status_response
 
+def story_content(player: Player, node: dict) -> str:
+    story_text = node['text']
+    if 'story' in node:
+        story_type =  node['story'].get('type')
+
+        if story_type is not None and isinstance(story_text, list):
+            match story_type:
+                case 'studio_time':
+                    index = 0
+                    if player.is_tired():
+                        index += 1
+                    if player.is_very_tired():
+                        index += 1
+                    if index in range(len(story_text)):
+                        return story_text[index]
+                    return story_text[-1] if index != 0 else story_text[0]
+                case 'random':
+                    return random.choice(story_text)
+                case _:
+                    raise ValueError(f'{story_type} not recognized')
+    return story_text
+
 def game_commands(node: dict) -> str:
     command_type = 'show'
     command_response = 'type to quit, setup'
@@ -43,6 +67,8 @@ def game_commands(node: dict) -> str:
 
     return command_response
 
+# main functions
+
 def refresh_story(player: Player, node: dict) -> tuple[str, bool]:
     head_separator = "="
     div_separator = "-"
@@ -52,7 +78,7 @@ untitled
 {game_status(player, node)}
 {div_separator * player.terminal_width}
 
-{node['text']}
+{story_content(player, node)}
 
 {div_separator * player.terminal_width}
 {game_commands(node)}

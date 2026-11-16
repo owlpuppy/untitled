@@ -11,10 +11,11 @@ target = "studio"
 
 [studio]
 text = ["""You are sitting at your desk. Your favorite art supplies and a cup of cold coffee are in front of you.
-Sunlight streams in the big windows, you can feel the warmth. What a perfect day to make some art!
+Sunlight streams in the big windows, you can feel the warmth. What a day to make some art!
 Or... drink some of that coffee. Did you make that yesterday, or this morning?""",
-"""It's getting a little chilly. You didn't realize how much the sunlight warmed your studio.
-There's probably still time to get a little more work in before it's time to go.""",
+"""It seems a little chily in here, despite the fact that you can see plenty of sunlight.
+Can it be time to go already? Surely not, maybe you're just a little moody.
+Rest does sound kinda nice though.""",
 """It's late, you're pretty tired. Still determined to do more though.
 Something tells you it's probably time to rest, but you just don't want to stop."""]
 

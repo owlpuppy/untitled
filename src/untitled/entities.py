@@ -15,10 +15,10 @@ class ArtTitle(Enum):
     EMOTION = ('sadness', 'anger', 'joy', 'jealousy', 'bliss', 'peace')
 
 class PlayerMood(Enum):
-    GRRR = "grrr", -5, 0.5
-    BLEGH = "blegh", -2, 0.40
-    OKI = "oki", 0, 0.25
-    COLON_THREE = ":3", 2, 0.15
+    GRRR = "grrr", -6, 0.5
+    BLEGH = "blegh", -3, 0.40
+    OKI = "oki", 1, 0.25
+    COLON_THREE = ":3", 3, 0.15
     UWU = "uwu", 5, 0.05
 
 class Artwork:
@@ -71,6 +71,7 @@ class Player:
     def __init__(self) -> None:
         self.works: list[Artwork] = []
         self.energy: int = random.randint(10, 35)
+        self.tired_weight = random.randint(-69, 69)
         self.mood: PlayerMood = PlayerMood.OKI
         self.studio_time = 0
         self.crit_energy: int = random.randint(60, 75)
@@ -94,50 +95,50 @@ class Player:
         return 0, len(self.mood_list) - 1, self.mood_list.index(self.mood)
 
     def change_mood(self, type: str) -> None:
-         min, max, current = self.get_mood_range()
+         low, high, current = self.get_mood_range()
          match type:
             case "+":
-                if current < max:
+                if current < high:
                     self.mood = self.mood_list[current + 1]
             case "-":
-                if current > min:
+                if current > low:
                     self.mood = self.mood_list[current - 1]
             case _:
                 raise ValueError(f"{type} is not a valid mood option")
 
-    def add_energy(self, min: int, max: int) -> None:
+    def add_energy(self, low: int, high: int) -> None:
         # better mood adds more
-        weighted_max = max + self.mood.value[1]
-        if weighted_max <= min:
-            weighted_max = min + 1
-        self.energy += random.randint(min, weighted_max)
+        weighted_high = high + self.mood.value[1]
+        if weighted_high <= low:
+            weighted_high = low + 1
+        self.energy += random.randint(low, weighted_high)
 
-    def use_energy(self, min: int, max: int) -> None:
+    def use_energy(self, low: int, high: int) -> None:
         # better mood uses less
-        weighted_max = max - self.mood.value[1]
-        if weighted_max <= min:
-            weighted_max = min + 1
-        self.energy -= random.randint(min, weighted_max)
+        weighted_high = high - self.mood.value[1]
+        if weighted_high <= low:
+            weighted_high = low + 1
+        self.energy -= random.randint(low, weighted_high)
 
-    def add_studio_time(self, min: int, max: int) -> None:
+    def add_studio_time(self, low: int, high: int) -> None:
         # better mood adds less
-        weighted_max = max - self.mood.value[1]
-        if weighted_max <= min:
-            weighted_max = min + 1
-        self.studio_time += random.randint(min, weighted_max)
+        weighted_high = high - self.mood.value[1]
+        if weighted_high <= low:
+            weighted_high = low + 1
+        self.studio_time += random.randint(low, weighted_high)
 
     def is_tired(self) -> bool:
-        if self.studio_time > (480 + self.energy):
+        if self.studio_time > (480 + self.tired_weight):
             return True
         return False
 
     def is_very_tired(self) -> bool:
-        if self.studio_time > (960 + self.energy):
+        if self.studio_time > (960 + self.tired_weight):
             return True
         return False
 
     def is_overworked(self) -> bool:
-        if self.studio_time > (1440 + self.energy):
+        if self.studio_time > (1440 + self.tired_weight):
             return True
         return False
 
@@ -151,6 +152,15 @@ class Player:
 
         if self.is_very_tired():
             self.change_mood("-")
+
+    def update_tired_weight(self, low: int, high: int) -> None:
+        if self.mood.value[1] < 1:
+            self.tired_weight -= random.randint(low, high)
+        else:
+            self.tired_weight += random.randint(low, high)
+
+        if self.tired_weight > self.energy:
+            self.tired_weight = self.energy
 
     # move instance methods
 
@@ -173,34 +183,28 @@ class Player:
 
     # action instance methods
 
-    def drink_coffee(self) -> None:
-        self.add_energy(5, 19)
-        self.add_studio_time(1, 5)
-
-    def nap(self) -> None:
-        self.studio_time = 0
-        self.change_mood("+")
-        self.add_energy(10, 19)
-
     def create(self) -> None:
-        mood_weight: int = self.mood.value[1]
         min, max, current = self.get_mood_range()
         mood_list = []
-        if mood_weight > 0:
-            mood_list = self.mood_list[1:]
-        elif mood_weight < 0:
-            mood_list = self.mood_list[:-1]
-        else:
-            mood_list = self.mood_list[1:-1]
+        match self.mood:
+            case PlayerMood.GRRR:
+                mood_list = self.mood_list[:-2]
+            case PlayerMood.BLEGH:
+                mood_list = self.mood_list[:-1]
+            case PlayerMood.OKI:
+                mood_list = self.mood_list[1:-1]
+            case _:
+                mood_list = self.mood_list[1:]
 
         self.works.append(Artwork.create(random.choice(mood_list)))
 
     # setup instance methods
 
     def set_delay(self) -> None:
-        self.delay += 2
         if self.delay > 7:
             self.delay = 1
+        else:
+            self.delay += 2
 
     def set_width(self) -> int:
         self.terminal_width = shutil.get_terminal_size().columns

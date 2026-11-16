@@ -26,7 +26,9 @@ def game_action(player: Player, action: str | None, responses: dict | None) -> s
     match action:
         case GameAction.DRINK_COFFEE.value:
             check_responses(responses)
-            player.drink_coffee()
+            # drink coffee
+            player.add_energy(5, 19)
+            player.add_studio_time(1, 5)
 
             if player.energy < player.max_energy:
                 return random.choice(responses["1"])
@@ -40,7 +42,7 @@ def game_action(player: Player, action: str | None, responses: dict | None) -> s
         case GameAction.CREATE.value:
             check_responses(responses)
             player.use_energy(5, 20)
-            player.add_studio_time(30, 60)
+            player.add_studio_time(30, 69)
 
             if player.energy < 0:
                 response, status = responses["lose"]
@@ -61,7 +63,12 @@ def game_action(player: Player, action: str | None, responses: dict | None) -> s
             check_responses(responses)
             if not player.is_tired():
                 return random.choice(responses["error"])
-            player.nap()
+            # nap
+            player.studio_time = 0
+            player.change_mood("+")
+            player.add_energy(10, 19)
+            player.update_tired_weight(4, 69)
+
             if player.energy < player.max_energy:
                 return random.choice(responses["1"])
             elif player.energy < player.crit_energy:

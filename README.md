@@ -102,4 +102,14 @@ Note there aren't any tests yet, but it will run.
 - added more story text
 - changed actions to use error for in game failure (idk if this is best but it makes it readable)
 
-Last updated: 9 November 2026
+### 0.1.9
+- story edits
+- mechanic adjustments
+- replace min and max vars with low and high (forgot this would shadow)
+- remove exisitng tired weight, add mechanic that reduces or adds time until tired depending on mood when going to sleep
+- various small code improvements
+- removed drink coffee and nap actions from player and added the underlying functionality to actions
+
+
+
+Last updated: 15 November 2026

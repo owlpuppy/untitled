@@ -58,6 +58,9 @@ class Artwork:
     def __repr__(self):
         return f"# Title: {self.title}, Type: {self.type}, Value: {self.value}, Liked: {self.liked.value[0]} #"
 
+    def __str__(self):
+        return f"Title: {self.title}, Type: {self.type}, Value: {self.value}, Liked: {self.liked.value[0]}"
+
 class Player:
     # class variables
     max_energy: int = 50

@@ -8,6 +8,9 @@ class GameAction(str, Enum):
     DRINK_COFFEE = 'drink_coffee'
     CREATE = 'create'
     NAP = "nap"
+    DELETE_WORK = 'delete_work'
+    REWORK_WORK = 'rework_work'
+    SELL_WORK = 'sell_work'
     SET_WIDTH = 'set_width'
     SET_DELAY = 'set_delay'
 
@@ -77,6 +80,15 @@ def game_action(player: Player, action: str | None, responses: dict | None) -> s
                 response, status = responses["lose"]
                 player.lose(status)
                 return response
+
+        case GameAction.DELETE_WORK.value:
+            return 'xx action not implemented'
+
+        case GameAction.REWORK_WORK.value:
+            return 'xx action not implemented'
+
+        case GameAction.SELL_WORK.value:
+            return 'xx action not implemented'
 
         case GameAction.SET_WIDTH.value:
             player.set_width()

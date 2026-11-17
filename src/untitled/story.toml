@@ -34,6 +34,10 @@ text = "Create something!"
 action = "create"
 
 [studio.choices.3]
+text = "Look through your art."
+target = "catalog"
+
+[studio.choices.4]
 text = "Go home."
 target = "home"
 
@@ -78,7 +82,35 @@ target = "studio"
 error = ["Eh, not tired enought to sleep yet.", "No sleep for you!!! Not yet anyway"]
 lose = ["The day passes as you are still in bed. Unfortunately you missed an important deadline.", "You slept too long."]
 
+# ---------------------------------------------------- catalog
 
+[catalog]
+text = """You look at your work scattered around, sort-of-organized. Maybe one day you'll get around to cleaning it up.
+Actually it's pretty messy, but it's better if you don't acknowledge that."""
+type = "catalog"
+
+[catalog.status]
+type = "game_stats"
+
+[catalog.choices.1]
+text = "Toss one of your works."
+action = "delete_work"
+
+[catalog.choices.2]
+text = "Rework one of your works."
+action = "rework_work"
+
+[catalog.choices.3]
+text = "Sell one of your works."
+action = "sell_work"
+
+[catalog.choices.4]
+text = "Go to your studio."
+target = "studio"
+
+[catalog.choices.5]
+text = "Go home."
+target = "home"
 
 # ---------------------------------------------------- gallery
 

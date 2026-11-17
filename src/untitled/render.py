@@ -54,6 +54,23 @@ def story_content(player: Player, node: dict) -> str:
                     raise ValueError(f'{story_type} not recognized')
     return story_text
 
+def show_data(player: Player, node: dict) -> str:
+    type = node.get('type')
+    return_data = ''
+    match type:
+        case 'catalog':
+            if player.works:
+                return_data += '\n----- start catalog\n'
+                return_data += '\n'.join(f"{i+1}. {work}" for i, work in enumerate(player.works))
+                return_data += '\n----- end catalog\n'
+            else:
+                return_data += "\n>> no finished works found <<\n"
+        case None:
+            pass
+        case _:
+            raise ValueError(f'{type} not recognized')
+    return return_data
+
 def game_commands(node: dict) -> str:
     command_type = 'show'
     command_response = 'type to quit, setup'
@@ -79,7 +96,7 @@ untitled
 {div_separator * player.terminal_width}
 
 {story_content(player, node)}
-
+{show_data(player, node)}
 {div_separator * player.terminal_width}
 {game_commands(node)}
 """

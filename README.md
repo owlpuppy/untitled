@@ -41,7 +41,9 @@ Note there aren't any tests yet, but it will run.
 - update studio text
 - add warning and lose mechanic for no sleep (called in engine) (may need to place creation of reply variable at start of loop and append to it)
 - need to add testing (should have done this already)
-- create a way to update inventory (may just be able to use a second input)
+- change story to use fail and lose instead of error for clarity
+- implement inventory modifications using second input line within the function
+- inplement random problem mechanics
 
 ## Possible
 - editable artwork inventory
@@ -110,6 +112,12 @@ Note there aren't any tests yet, but it will run.
 - various small code improvements
 - removed drink coffee and nap actions from player and added the underlying functionality to actions
 
+### 0.2.0
+- story edits, added catalog
+- added show data to render, has artwork catalog so far but it's expandable
+- added str method to artwork objects
+- added game action placeholders for catalog editing (displays not implemented)
+- removed art list from regular pages, since you can now look at it in catalog
 
 
-Last updated: 15 November 2026
+Last updated: 16 November 2026

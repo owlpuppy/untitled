@@ -41,7 +41,6 @@ def start_game() -> None:
         if keep_playing == False:
             break
 
-        print(player.works)
         entered = re.sub(r'[^A-Za-z0-9 ]+', '', input("\nChoose an option: ").strip().lower())
 
         reply = None

@@ -5,6 +5,7 @@ from pathlib import Path
 from .entities import ArtType, Artwork, Player
 from .actions import game_action
 from .render import game_status, refresh_story
+from .common import get_player_input
 
 # helper functions
 
@@ -25,7 +26,7 @@ def load_toml(file: str = '') -> dict:
 
 def start_game() -> None:
     story = load_toml("story")
-    player = Player()
+    player = Player.start_playing()
     commands = ['quit', 'setup']
 
     while True:
@@ -41,7 +42,7 @@ def start_game() -> None:
         if keep_playing == False:
             break
 
-        entered = re.sub(r'[^A-Za-z0-9 ]+', '', input("\nChoose an option: ").strip().lower())
+        entered = get_player_input("Choose an option:")
 
         reply = None
 

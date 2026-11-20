@@ -18,9 +18,7 @@ Can it be time to go already? Surely not, maybe you're just a little moody.
 Rest does sound kinda nice though.""",
 """It's late, you're pretty tired. Still determined to do more though.
 Something tells you it's probably time to rest, but you just don't want to stop."""]
-
-[studio.story]
-type = "studio_time"
+story_type = "studio_time"
 
 [studio.status]
 type = "game_stats"
@@ -54,7 +52,7 @@ lose = ["Not good, the room spins, panic sets in...", "You drank too much coffee
 1 = ['After much angst and deep thought, you created << artwork title >>. Amazing.',
 'You translated your internal "<< player mood >>" into something new!',
 "You've meticulously crafted your next masterpiece! Well hopefully anyway."]
-error = ["Ugh! Despite how hard you try, nothing comes to mind.",
+fail = ["Ugh! Despite how hard you try, nothing comes to mind.",
 "Bummer, you started on a few different things but they just didn't work out.",
 "Awww, crap. That didn't work at all. Grrr..."]
 lose = ["Uh oh, something doesn't feel right. You might need to... (thump) Too late.", "You became exhausted and fainted."]
@@ -79,15 +77,16 @@ target = "studio"
 [home.choices.1.responses]
 1 = ["Flop... Ahhh!", "Zzzzzzz..."]
 2 = ["Zzzz... blink... Oh no, look at how late it is!", "Oh wow that was a great... yikes the time!"]
-error = ["Eh, not tired enought to sleep yet.", "No sleep for you!!! Not yet anyway"]
+fail = ["Eh, not tired enought to sleep yet.", "No sleep for you!!! Not yet anyway..."]
 lose = ["The day passes as you are still in bed. Unfortunately you missed an important deadline.", "You slept too long."]
 
 # ---------------------------------------------------- catalog
 
 [catalog]
 text = """You look at your work scattered around, sort-of-organized. Maybe one day you'll get around to cleaning it up.
-Actually it's pretty messy, but it's better if you don't acknowledge that."""
-type = "catalog"
+Actually it's pretty messy, but it's better if you don't acknowledge that.
+You can do some stuff with your art, but try to make sure nothing bad happens!"""
+data_type = "catalog"
 
 [catalog.status]
 type = "game_stats"
@@ -111,6 +110,17 @@ target = "studio"
 [catalog.choices.5]
 text = "Go home."
 target = "home"
+
+[catalog.choices.1.responses]
+1 = ["Well, you sucessfuly demolished that. Destroyed. Utterly vaporized.",
+"You cast interdimensional wormhole! Okay, maybe that's a little overdramatic...",
+"Item deleted. In a robot voice."]
+2 = ["Good news! you got rid of what you wanted. Bad news... you got rid of something else too. Oops.",
+"Congratulations, you got a surprise two-for-one special!",
+"Hope you didn't need that other one."]
+fail = ["Hmm, I don't think you can get rid of something that doesn't exist.", "Poof! ...aaaand nothing was there in the first place."]
+lose = ["Wait, stop! Uh oh, I think you might have went a little too far...", "You destroyed your whole studio by mistake."]
+
 
 # ---------------------------------------------------- gallery
 

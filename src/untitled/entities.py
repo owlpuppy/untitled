@@ -22,9 +22,9 @@ class PlayerMood(Enum):
     UWU = "uwu", 5, 0.05
 
 class Artwork:
-    def __init__(self, liked: PlayerMood, title: str) -> None:
-        self.type: ArtType = random.choice(list(ArtType)).value
-        self.value: int = random.randint(1, 20)
+    def __init__(self, liked: PlayerMood, title: str, kind: ArtType, value: int) -> None:
+        self.kind: ArtType = kind
+        self.value: int = value
         self.liked: PlayerMood = liked
         self.title: str = title
 
@@ -44,11 +44,11 @@ class Artwork:
         if random.random() < 0.23:
             words.append(f'number {random.randint(1,19)}')
 
-        return cls(liked, " ".join(words).title())
+        return cls(liked, " ".join(words).title(), random.choice(list(ArtType)).value, random.randint(1, 20))
 
     def __eq__(self, other):
         if isinstance(other, Artwork):
-            if (self.type == other.type and
+            if (self.kind == other.kind and
                 self.value is other.value and
                 self.liked is other.liked and
                 self.title == other.title):
@@ -56,10 +56,10 @@ class Artwork:
         return False
 
     def __repr__(self):
-        return f"# Title: {self.title}, Type: {self.type}, Value: {self.value}, Liked: {self.liked.value[0]} #"
+        return f"# Title: {self.title}, Type: {self.kind}, Value: {self.value}, Liked: {self.liked.value[0]} #"
 
     def __str__(self):
-        return f"Title: {self.title}, Type: {self.type}, Value: {self.value}, Liked: {self.liked.value[0]}"
+        return f"Title: {self.title}, Type: {self.kind}, Value: {self.value}, Liked: {self.liked.value[0]}"
 
 class Player:
     # class variables
@@ -71,19 +71,48 @@ class Player:
     mood_list = list(PlayerMood)
 
     # instance vars
-    def __init__(self) -> None:
+    def __init__(self, energy: int, tired_weight: int, crit_energy: int, win_value: int, terminal_width: int) -> None:
         self.works: list[Artwork] = []
-        self.energy: int = random.randint(10, 35)
-        self.tired_weight = random.randint(-69, 69)
+        self.energy: int = energy
+        self.tired_weight = tired_weight
         self.mood: PlayerMood = PlayerMood.OKI
         self.studio_time = 0
-        self.crit_energy: int = random.randint(60, 75)
-        self.win_value: int = random.randint(100, 500)
+        self.crit_energy: int = crit_energy
+        self.win_value: int = win_value
         self.location: str = self.start_loc
         self.prev_location: str | None = None
         self.delay: int = 5
-        self.terminal_width: int = shutil.get_terminal_size().columns
+        self.terminal_width: int = terminal_width
         self.status_reason = None
+
+    @classmethod
+    def start_playing(cls):
+        energy = random.randint(10, 35)
+        tired_weight = random.randint(-69, 69)
+        crit_energy = random.randint(60, 75)
+        win_value = random.randint(100, 500)
+        terminal_width = shutil.get_terminal_size().columns
+        return cls(energy, tired_weight, crit_energy, win_value, terminal_width)
+
+    #magic methods
+
+    def __repr__(self):
+        response = (f"# Energy(current/max/crit):{self.energy}/{self.max_energy}/{self.crit_energy}, "
+                    "Locations(start,quit,lose,setup,current,previous):"
+                    f"{self.start_loc}/{self.quit_loc}/{self.lose_loc}/{self.setup_loc}/{self.location}/{self.prev_location}, "
+                    f"Moods:{[mood.value[0] for mood in self.mood_list]}, Works:{self.works}, "
+                    f"Mood:{self.mood.value[0]}, WinValue:{self.win_value}, TiredWeight:{self.tired_weight}, "
+                    f"Setup(TermWidth/Delay): {self.terminal_width}/{self.delay} #")
+        return response
+
+    def __str__(self):
+        response = (f"Energy(current/max/crit):{self.energy}/{self.max_energy}/{self.crit_energy}, "
+                    "Locations(start,quit,lose,setup,current,previous):"
+                    f"{self.start_loc}/{self.quit_loc}/{self.lose_loc}/{self.setup_loc}/{self.location}/{self.prev_location}, "
+                    f"Moods:{[mood.value[0] for mood in self.mood_list]}, Works:{self.works}, "
+                    f"Mood:{self.mood.value[0]}, WinValue:{self.win_value}, TiredWeight:{self.tired_weight}, "
+                    f"Setup(TermWidth/Delay): {self.terminal_width}/{self.delay}")
+        return response
 
     # mechanic instance methods
 
@@ -97,9 +126,9 @@ class Player:
     def get_mood_range(self) -> tuple[int, int, int]:
         return 0, len(self.mood_list) - 1, self.mood_list.index(self.mood)
 
-    def change_mood(self, type: str) -> None:
+    def change_mood(self, mood_type: str) -> None:
          low, high, current = self.get_mood_range()
-         match type:
+         match mood_type:
             case "+":
                 if current < high:
                     self.mood = self.mood_list[current + 1]
@@ -107,7 +136,7 @@ class Player:
                 if current > low:
                     self.mood = self.mood_list[current - 1]
             case _:
-                raise ValueError(f"{type} is not a valid mood option")
+                raise ValueError(f"{mood_type} is not a valid mood option")
 
     def add_energy(self, low: int, high: int) -> None:
         # better mood adds more
@@ -140,6 +169,11 @@ class Player:
             return True
         return False
 
+    def is_grumpy(self) -> bool:
+        if self.mood is PlayerMood.GRRR:
+            return True
+        return False
+
     def is_overworked(self) -> bool:
         if self.studio_time > (1440 + self.tired_weight):
             return True
@@ -149,6 +183,8 @@ class Player:
         if self.works:
             liked_overall = sum((work.liked.value[1] * work.value) for work in self.works) / sum((work.value) for work in self.works)
             self.mood = min(PlayerMood, key=lambda mood: abs(mood.value[1] - liked_overall))
+        else:
+            self.mood = PlayerMood.OKI
 
         if self.is_tired():
             self.change_mood("-")

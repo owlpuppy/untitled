@@ -44,6 +44,7 @@ Note there aren't any tests yet, but it will run.
 - change story to use fail and lose instead of error for clarity
 - implement inventory modifications using second input line within the function
 - inplement random problem mechanics
+- add eq method to player
 
 ## Possible
 - editable artwork inventory
@@ -52,7 +53,19 @@ Note there aren't any tests yet, but it will run.
 - more input filtering
 
 ## Changelog (forgot this is how you do that)
-## 0.1.0 - 0.1.2
+
+### Current: 0.2.1
+- added remove work action (has instant loss mechanic, conditional error mechanic)
+- fixed update mood bug (didn't reset mood when only one work was present and that was deleted)
+- created function to get a response based on response type
+- cleaned up some render logic
+- added common input functions to take string and int (false is error for string, not an int for int)
+- changed artwork, player classes to do variable initial values in a classmethod
+- added str and repr to player
+- -story updates
+
+
+### 0.1.0 - 0.1.2
 - basic classes
 - actions separated
 - screen output separated
@@ -120,4 +133,4 @@ Note there aren't any tests yet, but it will run.
 - removed art list from regular pages, since you can now look at it in catalog
 
 
-Last updated: 16 November 2026
+Last updated: 19 November 2026

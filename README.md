@@ -144,4 +144,4 @@ Note there aren't any tests yet, but it will run.
 - added str and repr to player
 - story updates
 
-Last updated: 19 November 2026
+Last updated: 20 November 2026

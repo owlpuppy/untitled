@@ -13,11 +13,11 @@ def game_status(player: Player, node: dict) -> str:
         match status_type:
             case 'game_stats':
                 energy = f'[Energy: {player.energy}/{player.max_energy}]'
-                mood = f'[Mood: {player.mood.value[0]}]'
-                studio_hours, studio_minutes = divmod(player.studio_time, 60) if player.studio_time > 0 else (0, 0)
-                studio_time = f'[Studio time: {studio_hours}h:{studio_minutes}m]'
+                mood = f'[Mood: {player.mood.value}]'
+                awake_hours, awake_minutes = divmod(player.time_awake, 60) if player.time_awake > 0 else (0, 0)
+                time_awake = f'[Awake for: {awake_hours}h:{awake_minutes}m]'
                 tired = 'very tired!!' if player.is_very_tired() else 'tired!!' if player.is_tired() else ''
-                status_response += f'{energy} {studio_time} {mood}   [{player.location}] {tired}'
+                status_response += f'{energy} {time_awake} {mood}   [{player.location}] {tired}'
             case 'setup_stats':
                 status_response += f'[delay: {player.delay} sec] [terminal width: {player.terminal_width}] '
             case _:
@@ -37,7 +37,7 @@ def story_content(player: Player, node: dict) -> str:
 
     if story_type is not None and isinstance(story_text, list):
         match story_type:
-            case 'studio_time':
+            case 'time_awake':
                 index = 0
                 if player.is_tired():
                     index += 1
@@ -71,7 +71,7 @@ def show_data(player: Player, node: dict) -> str:
 
 def game_commands(node: dict) -> str:
     command_type = 'show'
-    command_response = 'type to quit, setup'
+    command_response = 'type to quit, setup  (x to cancel)'
     if 'commands' in node:
         command_type = node['commands'].get('type')
         match command_type:

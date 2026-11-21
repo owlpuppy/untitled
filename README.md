@@ -54,16 +54,18 @@ Note there aren't any tests yet, but it will run.
 
 ## Changelog (forgot this is how you do that)
 
-### Current: 0.2.1
-- added remove work action (has instant loss mechanic, conditional error mechanic)
-- fixed update mood bug (didn't reset mood when only one work was present and that was deleted)
-- created function to get a response based on response type
-- cleaned up some render logic
-- added common input functions to take string and int (false is error for string, not an int for int)
-- changed artwork, player classes to do variable initial values in a classmethod
-- added str and repr to player
-- -story updates
-
+### Current: 0.2.2
+- changed studio time to time awake
+- added error to actions
+- delete work: added random fail to delete and time awake, code cleanup
+- added rework work
+- added random fail to drink coffee
+- fixed caution/extra delete bug in actions to make sure it only deletes a second one if there is one
+- added time awake to repr and str for player
+- changed time awake and add time to go 2 above min
+- modified PlayerMood to have named values, makes more sense internally
+- modified common input functions to return None if the request is cancelled, added logic to act on that
+- code improvements
 
 ### 0.1.0 - 0.1.2
 - basic classes
@@ -132,5 +134,14 @@ Note there aren't any tests yet, but it will run.
 - added game action placeholders for catalog editing (displays not implemented)
 - removed art list from regular pages, since you can now look at it in catalog
 
+### 0.2.1
+- added remove work action (has instant loss mechanic, conditional error mechanic)
+- fixed update mood bug (didn't reset mood when only one work was present and that was deleted)
+- created function to get a response based on response type
+- cleaned up some render logic
+- added common input functions to take string and int (false is error for string, not an int for int)
+- changed artwork, player classes to do variable initial values in a classmethod
+- added str and repr to player
+- story updates
 
 Last updated: 19 November 2026

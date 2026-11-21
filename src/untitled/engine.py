@@ -5,7 +5,7 @@ from pathlib import Path
 from .entities import ArtType, Artwork, Player
 from .actions import game_action
 from .render import game_status, refresh_story
-from .common import get_player_input
+from .common import get_player_input, CANCEL_REQUEST
 
 # helper functions
 
@@ -21,7 +21,6 @@ def load_toml(file: str = '') -> dict:
     with open(toml_path, "rb") as f:
         return tomllib.load(f)
 
-
 # primary function
 
 def start_game() -> None:
@@ -32,7 +31,7 @@ def start_game() -> None:
     while True:
         player.update_mood()
         if player.is_overworked():
-            player.lose("You were working in your studio too long.")
+            player.lose("You went too long without sleep.")
 
         node = story[player.location]
         display_story, keep_playing = refresh_story(player, node)
@@ -43,7 +42,6 @@ def start_game() -> None:
             break
 
         entered = get_player_input("Choose an option:")
-
         reply = None
 
         if entered in node["choices"]:
@@ -66,6 +64,8 @@ def start_game() -> None:
                         player.setup()
                     else:
                         reply = ">> already in setup <<"
+                case None:
+                    reply = CANCEL_REQUEST
                 case _:
                   reply = ">> try again <<"
 

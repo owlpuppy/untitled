@@ -32,6 +32,8 @@ def start_game() -> None:
         player.update_mood()
         if player.is_overworked():
             player.lose("You went too long without sleep.")
+        if player.won_by_value():
+            player.win("Your body of work is of great value!")
 
         node = story[player.location]
         display_story, keep_playing = refresh_story(player, node)

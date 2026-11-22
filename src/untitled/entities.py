@@ -29,7 +29,7 @@ class PlayerMood(Enum):
 class Artwork:
     #class variables
     min_value = 1
-    max_value = 20
+    max_value = 15
 
     def __init__(self, liked: PlayerMood, title: str, kind: ArtType, value: int) -> None:
         self.kind: ArtType = kind
@@ -38,7 +38,7 @@ class Artwork:
         self.title: str = title
 
     @classmethod
-    def create(cls, liked: PlayerMood):
+    def create(cls, liked: PlayerMood, mood: PlayerMood):
         words = []
 
         if random.random() < 0.73:
@@ -53,7 +53,16 @@ class Artwork:
         if random.random() < 0.23:
             words.append(f'number {random.randint(1,19)}')
 
-        return cls(liked, " ".join(words).title(), random.choice(list(ArtType)).value, random.randint(cls.min_value, cls.max_value))
+        weighted_max_value = cls.max_value - liked.weight if mood.weight < 1 else cls.max_value + liked.weight
+
+        return cls(liked, " ".join(words).title(), random.choice(list(ArtType)).value, random.randint(cls.min_value, weighted_max_value))
+
+    def is_liked(self) -> bool:
+        if self.liked.weight < 1:
+            return False
+        return True
+
+    # magic methods
 
     def __eq__(self, other):
         if isinstance(other, Artwork):
@@ -64,9 +73,6 @@ class Artwork:
                 return True
         return False
 
-    def __repr__(self):
-        return f"# Title: {self.title}, Type: {self.kind}, Value: {self.value}, Liked: {self.liked.value} #"
-
     def __str__(self):
         return f"Title: {self.title}, Type: {self.kind}, Value: {self.value}, Liked: {self.liked.value}"
 
@@ -76,6 +82,7 @@ class Player:
     start_loc = "intro"
     quit_loc = "quit"
     lose_loc = "lose"
+    win_loc = "win"
     setup_loc = "setup"
     mood_list = list(PlayerMood)
 
@@ -99,25 +106,16 @@ class Player:
         energy = random.randint(10, 35)
         tired_weight = random.randint(-69, 69)
         crit_energy = random.randint(60, 75)
-        win_value = random.randint(100, 500)
+        win_value = random.randint(250, 500)
         terminal_width = shutil.get_terminal_size().columns
         return cls(energy, tired_weight, crit_energy, win_value, terminal_width)
 
-    #magic methods
-
-    def __repr__(self):
-        response = (f"# Energy(current/max/crit):{self.energy}/{self.max_energy}/{self.crit_energy}, "
-                    "Locations(start,quit,lose,setup,current,previous):"
-                    f"{self.start_loc}/{self.quit_loc}/{self.lose_loc}/{self.setup_loc}/{self.location}/{self.prev_location}, "
-                    f"Moods:{[mood.value[0] for mood in self.mood_list]}, Works:{self.works}, TimeAwake:{self.time_awake}, "
-                    f"Mood:{self.mood.value}, WinValue:{self.win_value}, TiredWeight:{self.tired_weight}, "
-                    f"Setup(TermWidth/Delay): {self.terminal_width}/{self.delay} #")
-        return response
+    # magic methods
 
     def __str__(self):
         response = (f"Energy(current/max/crit):{self.energy}/{self.max_energy}/{self.crit_energy}, "
-                    "Locations(start,quit,lose,setup,current,previous):"
-                    f"{self.start_loc}/{self.quit_loc}/{self.lose_loc}/{self.setup_loc}/{self.location}/{self.prev_location}, "
+                    "Locations(start,quit,lose,win,setup,current,previous):"
+                    f"{self.start_loc}/{self.quit_loc}/{self.lose_loc}/{self.win_loc}/{self.setup_loc}/{self.location}/{self.prev_location}, "
                     f"Moods:{[mood.value[0] for mood in self.mood_list]}, Works:{self.works}, TimeAwake:{self.time_awake}, "
                     f"Mood:{self.mood.value}, WinValue:{self.win_value}, TiredWeight:{self.tired_weight}, "
                     f"Setup(TermWidth/Delay): {self.terminal_width}/{self.delay}")
@@ -229,6 +227,10 @@ class Player:
         self.status_reason = reason
         self.move(self.lose_loc)
 
+    def win(self, reason) -> None:
+        self.status_reason = reason
+        self.move(self.win_loc)
+
     # action instance methods
 
     def create(self) -> None:
@@ -244,7 +246,7 @@ class Player:
             case _:
                 mood_list = self.mood_list[1:]
 
-        self.works.append(Artwork.create(random.choice(mood_list)))
+        self.works.append(Artwork.create(random.choice(mood_list), self.mood))
 
     # setup instance methods
 

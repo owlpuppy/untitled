@@ -159,36 +159,50 @@ def game_action(player: Player, action: str | None, responses: dict | None) -> s
                 return get_response(responses, "error")
 
             index = entered - 1
-            if 0 <= index < len(player.works):
-                player.use_energy(5, 10)
-                player.add_time_awake(15, 42)
-                # too much energy used
-                if player.energy < 0:
-                    response, status = responses["lose"]
-                    player.lose(status)
-                    return response
-                # random failure
-                if random.random() < 0.05:
-                   return  get_response(responses, "fail")
-                # going to rework based on mood
-                liked_index = player.mood_list.index(player.works[index].liked)
-                if random.random() < player.mood.chance:
-                    # bad result
-                    player.works[index].liked = player.mood_list[liked_index - 1] if liked_index > 0 else player.mood_list[0]
-                    if player.works[index].liked.weight < 1:
-                        player.works[index].value = random.randint(player.works[index].value + 1, player.works[index].max_value)
-                    else:
-                        player.works[index].value = random.randint(player.works[index].min_value, player.works[index].value - 1)
-                    return get_response(responses, "caution")
+
+            if not (0 <= index < len(player.works)):
+                return get_response(responses, "error")
+
+            player.use_energy(5, 10)
+            player.add_time_awake(15, 42)
+            # too much energy used
+            if player.energy < 0:
+                response, status = responses["lose"]
+                player.lose(status)
+                return response
+            # random failure
+            if random.random() < 0.05:
+               return  get_response(responses, "fail")
+            # going to rework based on mood
+            to_edit = player.works[index]
+            liked_index = player.mood_list.index(to_edit.liked)
+
+            if random.random() < player.mood.chance:
+                # bad result
+                to_edit.liked = player.mood_list[liked_index - 1] if liked_index > 0 else player.mood_list[0]
+                if not to_edit.is_liked():
+                    # not liked, make it worth more
+                    new_min = to_edit.value + 1
+                    new_max = to_edit.max_value - player.mood.weight
                 else:
-                    # good result
-                    player.works[index].liked = player.mood_list[liked_index + 1] if liked_index < len(player.mood_list) else player.mood_list[-1]
-                    if player.works[index].liked.weight > 0:
-                        player.works[index].value = random.randint(player.works[index].value + 1, player.works[index].max_value)
-                    else:
-                        player.works[index].value = random.randint(player.works[index].min_value, player.works[index].value - 1)
-                    return get_response(responses, "success")
-            return get_response(responses, "error")
+                    # liked, make it worth less
+                    new_min = to_edit.min_value
+                    new_max = to_edit.value - 1
+                to_edit.value = random.randint(new_min, new_max) if new_min < new_max else new_min
+                return get_response(responses, "caution")
+
+            # good result
+            to_edit.liked = player.mood_list[liked_index + 1] if liked_index < len(player.mood_list) else player.mood_list[-1]
+            if to_edit.is_liked():
+                # liked, make it worth more
+                new_min = to_edit.value + 1
+                new_max = to_edit.max_value + player.mood.weight
+            else:
+                # not liked, make it worth less
+                new_min = to_edit.min_value
+                new_max = to_edit.value - 1
+            to_edit.value = random.randint(new_min, new_max) if new_min < new_max else new_min
+            return get_response(responses, "success")
 
         case GameAction.SELL_WORK.value:
             return 'xx action not implemented'

@@ -20,6 +20,13 @@ def game_status(player: Player, node: dict) -> str:
                 status_response += f'{energy} {time_awake} {mood}   [{player.location}] {tired}'
             case 'setup_stats':
                 status_response += f'[delay: {player.delay} sec] [terminal width: {player.terminal_width}] '
+            case 'win_stats':
+                energy = f'[Energy: {player.energy}/{player.max_energy}]'
+                mood = f'[Mood: {player.mood.value}]'
+                awake_hours, awake_minutes = divmod(player.time_awake, 60) if player.time_awake > 0 else (0, 0)
+                time_awake = f'[Awake for: {awake_hours}h:{awake_minutes}m]'
+                tired = 'very tired!!' if player.is_very_tired() else 'tired!!' if player.is_tired() else ''
+                status_response += f'{energy} {time_awake} {mood} {tired}\n'
             case _:
                 raise ValueError(f"status type in {player.location} is not valid")
 
@@ -27,7 +34,7 @@ def game_status(player: Player, node: dict) -> str:
         status_response += status_text
 
     if player.status_reason is not None:
-        status_response += player.status_reason
+        status_response += f" {player.status_reason}"
 
     return status_response
 

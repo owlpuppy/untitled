@@ -35,37 +35,27 @@ Note there aren't any tests yet, but it will run.
 - add rooms and actions
 - add failure modes
 - automated tests
-- modify functions to return stuff as necessary, ensure all print commands are located in the same function
 - decide on what I want for win mechanics and how to implement them
-- update quit and intro screens
-- update studio text
-- add warning and lose mechanic for no sleep (called in engine) (may need to place creation of reply variable at start of loop and append to it)
+- update quit screen
 - need to add testing (should have done this already)
-- change story to use fail and lose instead of error for clarity
-- implement inventory modifications using second input line within the function
+- implement inventory modifications using second input line within the function (in progress)
 - inplement random problem mechanics
-- add eq method to player
+- add eq method to player?
 
 ## Possible
 - editable artwork inventory
 - logging (haven't thought of anything to log yet)
 - print handler (type to screen)
-- more input filtering
 
 ## Changelog (forgot this is how you do that)
 
-### Current: 0.2.2
-- changed studio time to time awake
-- added error to actions
-- delete work: added random fail to delete and time awake, code cleanup
-- added rework work
-- added random fail to drink coffee
-- fixed caution/extra delete bug in actions to make sure it only deletes a second one if there is one
-- added time awake to repr and str for player
-- changed time awake and add time to go 2 above min
-- modified PlayerMood to have named values, makes more sense internally
-- modified common input functions to return None if the request is cancelled, added logic to act on that
-- code improvements
+### Current: 0.3.0
+- added win by value check, win location, win story
+- added weight to artwork creation
+- changed rework to handle the weighted variables and always get a little better or worse (code is messy)
+- removed repr methods (they weren't correct, I need to figure that out)
+- added win stats to render
+- updated intro
 
 ### 0.1.0 - 0.1.2
 - basic classes
@@ -144,4 +134,18 @@ Note there aren't any tests yet, but it will run.
 - added str and repr to player
 - story updates
 
-Last updated: 20 November 2026
+### 0.2.2
+- changed studio time to time awake
+- added error to actions
+- delete work: added random fail to delete and time awake, code cleanup
+- added rework work
+- added random fail to drink coffee
+- fixed caution/extra delete bug in actions to make sure it only deletes a second one if there is one
+- added time awake to repr and str for player
+- changed time awake and add time to go 2 above min
+- modified PlayerMood to have named values, makes more sense internally
+- modified common input functions to return None if the request is cancelled, added logic to act on that
+- code improvements
+
+
+Last updated: 22 November 2026

@@ -1,7 +1,19 @@
 # ---------------------------------------------------- intro
 
 [intro]
-text = "Welcome. This is where I introduce the game. You can type quit at any time to quit the game."
+text = """Welcome. I hope you have fun, or get annoyed. Or both.
+If it's neither, please pretend at least one of them was true.
+
+Anyway...
+
+Ohhh, I forgot to explain WHAT it's about. Your goal is to become a successful, valued artist.
+Yes, in a text-based game.
+It sounded like a good idea at the time.
+
+It's not done, and it was more fun to make new stuff instead of testing, so... yeah."""
+
+[intro.status]
+text = "Hi! Pay attention to the stuff that will show up here."
 
 [intro.choices.1]
 text = "Play"
@@ -134,18 +146,35 @@ fail = ["You tried, but it just didn't help.", "Ugh, that was wasted effort. Tha
 error = ["Can't change what you don't have.", "Did you imagine an artwork again???"]
 lose = ["Well... I think you might be in trouble here.", "You worked too hard."]
 
-# ---------------------------------------------------- gallery
+# ---------------------------------------------------- win
 
-[gallery]
-text = "Your work is a success! You win!"
+[win]
+text = ["""Your work is a success! After a long, difficult journey, navigating pitfalls along the way, you've managed to win "the game"!
+(By the way, you lost The Game. Not this game, the other one. If you have no idea what that means, don't worry about it. If you do, you're welcome.)""",
+"""I'm so sorry to see you go, we were having great fun together. Me annoying you with randomly changing stuff, you... being annoyed...
+I could always go back a few steps, just for fun. No??? Well, okay. Sigh, I guess we can be done for now. See you back again soon!!!""",
+"""Are you sure you don't want to eat your paintbrushes instead?
+(Please don't, I cause myself enough trouble already. Regular snacks are fine.)
+I hope you have an ARTful day!""",
+"""You were found frantically trying to eat the bristles off all your paintbrushes.
+You and your therapist decide together it's best to choose a new career.
+Check above for the real ending. Hehehe.""",
+"""This was SO fun! I enjoyed being with you on your completely uneventful and easy journey. Wait, it WAS?
 
-[gallery.status]
-type = "game_stats"
+*typing: make loss and failue mechanics more likely... add some more randomization...*
 
-[gallery.commands]
+Ahh, ignore that, just making some personal notes, nothing you need to worry about."""]
+story_type = "random"
+data_type = "catalog"
+
+[win.status]
+type = "win_stats"
+text = "Congratulations, you're a successful artist."
+
+[win.commands]
 type = "hide"
 
-[gallery.choices]
+[win.choices]
 # Empty
 
 # ---------------------------------------------------- quit
@@ -166,7 +195,7 @@ text = """You were found frantically trying to eat the bristles off all your pai
 You and your therapist decide together it's best to choose a new career."""
 
 [lose.status]
-text = "Sorry, you lost. "
+text = "Sorry, you lost."
 
 [lose.commands]
 type = "hide"

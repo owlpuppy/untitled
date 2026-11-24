@@ -3,7 +3,7 @@
 import random, re
 from enum import Enum
 from .entities import ArtType, Artwork, Player, PlayerMood
-from .common import get_player_input, get_player_input_as_int, CANCEL_REQUEST
+from .common import get_player_input, get_player_input_as_int, logger, CANCEL_REQUEST
 
 class GameAction(str, Enum):
     DRINK_COFFEE = 'drink_coffee'
@@ -18,28 +18,29 @@ class GameAction(str, Enum):
 # helper functions
 
 def get_response(responses: dict | None, response_type: str) -> str | tuple[str, str]:
-    if responses is None:
-        raise ValueError(f"No responses found for {action}")
+    if responses is None or not isinstance(responses, dict):
+        raise ValueError(f"responses are missing")
+
+
+    response = responses.get(response_type) if isinstance(responses, dict) else None
+
+    if response is None:
+       response = response_type
+       logger.error(f"responses are missing, used type")
 
     match response_type:
-        case "success":
-            return  random.choice(responses["1"]) if isinstance(responses["1"], list) else responses["1"]
-        case "caution":
-            return random.choice(responses["2"]) if isinstance(responses["2"], list) else responses["2"]
-        case "fail":
-            return random.choice(responses["fail"]) if isinstance(responses["fail"], list) else responses["fail"]
+        case "success" | "caution" | "fail":
+            return  random.choice(response) if isinstance(response, list) else response
         case "error":
-            return f'>> {random.choice(responses["error"])} <<' if isinstance(responses["error"], list) else f'>> {responses["error"]} <<'
+            return f'>> {random.choice(response)} <<' if isinstance(response, list) else f'>> {response} <<'
         case "lose":
-            if len(responses["lose"]) != 2:
-                raise ValueError(f"lose responses are not valid {action}")
-            return tuple(responses["lose"])
+            if isinstance(response, list):
+                if len(response) == 2:
+                   return tuple(response)
+                logger.error('lose response must have exactly 2 values, used type for both')
+            return (response, response)
         case _:
             raise ValueError(f"{response_type} is not a valid response type")
-
-def take_input(msg: str) -> str | None:
-    entered = re.sub(r'[^A-Za-z0-9 ]+', '', input(f"\n{msg} ").strip().lower())
-    return entered
 
 # main functions
 

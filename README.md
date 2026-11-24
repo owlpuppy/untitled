@@ -47,15 +47,15 @@ Note there aren't any tests yet, but it will run.
 - logging (haven't thought of anything to log yet)
 - print handler (type to screen)
 
-## Changelog (forgot this is how you do that)
+## Current Version
 
-### Current: 0.3.0
-- added win by value check, win location, win story
-- added weight to artwork creation
-- changed rework to handle the weighted variables and always get a little better or worse (code is messy)
-- removed repr methods (they weren't correct, I need to figure that out)
-- added win stats to render
-- updated intro
+### 0.4.0
+- changed 1 and 2 to success and caution in story and logic (makes code clearer)
+- changed get response to continue if responses are missing/wrong in story, generates error if the type is invalid
+- added travel time option, only does anything if there's a target
+- added logging
+
+## Changelog
 
 ### 0.1.0 - 0.1.2
 - basic classes
@@ -147,5 +147,12 @@ Note there aren't any tests yet, but it will run.
 - modified common input functions to return None if the request is cancelled, added logic to act on that
 - code improvements
 
+### 0.3.0
+- added win by value check, win location, win story
+- added weight to artwork creation
+- changed rework to handle the weighted variables and always get a little better or worse (code is messy)
+- removed repr methods (they weren't correct, I need to figure that out)
+- added win stats to render
+- updated intro
 
-Last updated: 22 November 2026
+Last updated: 23 November 2026

@@ -50,23 +50,24 @@ target = "catalog"
 [studio.choices.4]
 text = "Go home."
 target = "home"
+travel = "short"
 
 #[studio.choices.2]
 #text = "Go to the gallery."
 #target = "gallery"
 
 [studio.choices.1.responses]
-1 = ["Gulp. Ugh, bitter!", "It may be cold, and bitter, but at least it's strong!", "Sip. Hmm. Needs something. Like good coffee."]
-2 = ["Your hands begin to shake, be careful!", "OhWowThisDoesn'tTasteSoSoBad!", "Ahhh lots of energy! And lots. And lots. Whoa."]
+success = ["Gulp. Ugh, bitter!", "It may be cold, and bitter, but at least it's strong!", "Sip. Hmm. Needs something. Like good coffee."]
+caution = ["Your hands begin to shake, be careful!", "OhWowThisDoesn'tTasteSoSoBad!", "Ahhh lots of energy! And lots. And lots. Whoa."]
 fail = "You spilled your coffee. Again."
 error = "Well, you thought that was coffee. It's not."
 lose = ["Not good, the room spins, panic sets in...", "You drank too much coffee."]
 
 [studio.choices.2.responses]
-1 = ['After much angst and deep thought, you created << artwork title >>. Amazing.',
+success = ['After much angst and deep thought, you created << artwork title >>. Amazing.',
 'You translated your internal "<< player mood >>" into something new!',
 "You've meticulously crafted your next masterpiece! Well hopefully anyway."]
-2 = "You worked really, really, really, really, really hard to create << artwork title >>! REALLY!"
+caution = "You worked really, really, really, really, really hard to create << artwork title >>! REALLY!"
 fail = ["Ugh! Despite how hard you try, nothing comes to mind.",
 "Bummer, you started on a few different things but they just didn't work out.",
 "Awww, crap. That didn't work at all. Grrr..."]
@@ -89,10 +90,11 @@ action = "nap"
 [home.choices.2]
 text = "Go to your studio."
 target = "studio"
+travel = "short"
 
 [home.choices.1.responses]
-1 = ["Flop... Ahhh!", "Zzzzzzz..."]
-2 = ["Zzzz... blink... Oh no, look at how late it is!", "Oh wow that was a great... yikes the time!"]
+success = ["Flop... Ahhh!", "Zzzzzzz..."]
+caution = ["Zzzz... blink... Oh no, look at how late it is!", "Oh wow that was a great... yikes the time!"]
 fail = ["You tried, unfortunately sleep didn't come.", "After squeezing your eyes shut for a bit, you gave up."]
 error = ["Eh, not tired enought to sleep yet.", "No sleep for you!!! Not yet anyway..."]
 lose = ["The day passes as you are still in bed. Unfortunately you missed an important deadline.", "You slept too long."]
@@ -124,15 +126,11 @@ action = "sell_work"
 text = "Go to your studio."
 target = "studio"
 
-[catalog.choices.5]
-text = "Go home."
-target = "home"
-
 [catalog.choices.1.responses]
-1 = ["Well, you sucessfuly demolished that. Destroyed. Utterly vaporized.",
+success = ["Well, you sucessfuly demolished that. Destroyed. Utterly vaporized.",
 "You cast interdimensional wormhole! Okay, maybe that's a little overdramatic...",
 "Item deleted. In a robot voice."]
-2 = ["Good news! you got rid of what you wanted. Bad news... you got rid of something else too. Oops.",
+caution = ["Good news! you got rid of what you wanted. Bad news... you got rid of something else too. Oops.",
 "Congratulations, you got a surprise two-for-one special!",
 "Hope you didn't need that other one."]
 fail = ["Well, that didn't work.", "You tried. But you know what they say about trying."]
@@ -140,8 +138,8 @@ error = ["Hmm, I don't think you can get rid of something that doesn't exist.", 
 lose = ["Wait, stop! Uh oh, I think you might have went a little too far...", "You destroyed your whole studio by mistake."]
 
 [catalog.choices.2.responses]
-1 = "Good news! It's better now!"
-2 = "bad news. It's worse now."
+success = "Good news! It's better now!"
+caution = "bad news. It's worse now."
 fail = ["You tried, but it just didn't help.", "Ugh, that was wasted effort. That stinks."]
 error = ["Can't change what you don't have.", "Did you imagine an artwork again???"]
 lose = ["Well... I think you might be in trouble here.", "You worked too hard."]

@@ -5,7 +5,7 @@ from pathlib import Path
 from .entities import ArtType, Artwork, Player
 from .actions import game_action
 from .render import game_status, refresh_story
-from .common import get_player_input, CANCEL_REQUEST
+from .common import get_player_input, logger, CANCEL_REQUEST
 
 # helper functions
 
@@ -26,7 +26,6 @@ def load_toml(file: str = '') -> dict:
 def start_game() -> None:
     story = load_toml("story")
     player = Player.start_playing()
-    commands = ['quit', 'setup']
 
     while True:
         player.update_mood()
@@ -49,14 +48,24 @@ def start_game() -> None:
         if entered in node["choices"]:
             chosen = node["choices"][entered]
             target = chosen.get("target")
+            travel = chosen.get("travel")
             reply = game_action(player, chosen.get("action"), chosen.get("responses"))
             if target is not None:
                 if target in story:
                     player.move(target)
+                    match travel:
+                        case "short":
+                            player.add_time_awake(3, 9)
+                        case "long":
+                            player.add_time_awake(20, 35)
+                        case _:
+                            if travel is not None:
+                                logger.error(f"{travel} used as option, not implemented")
                 elif target == '<< prev >>':
                     player.back()
                 else:
-                    raise ValueError(f"{target} not present in TOML file")
+                    logger.error(f"{target} used as location, not implemented")
+                    reply = "! missing location, move cancelled"
         else:
             match entered:
                 case 'quit':
